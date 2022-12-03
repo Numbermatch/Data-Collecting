@@ -4,8 +4,8 @@ import os
 import re
 import csv
 
-directory = '/home/paul/Documents/Machine_Learning/Bash_Predictions/Man_Notes/'
-directory2 = '/home/paul/Documents/Machine_Learning/Bash_Predictions/'
+directory = './Man_Notes/'
+directory2 = './'
 ourDict = {}
 
 #Constructing our Dictionary of Columns
@@ -25,8 +25,6 @@ for filename in os.listdir(directory):
 				else:
 					ourDict[key_word] += 1
 
-ourURL = "/home/paul/Documents/Machine_Learning/Bash_Predictions/Man_Notes/lsb_release.txt"
-
 #Filtering our Dictionary for relevant columns
 for vali in list(ourDict):
 	if ourDict[vali] <= 10:
@@ -34,6 +32,7 @@ for vali in list(ourDict):
 
 ourDict["Path"] = ""
 final_df = pd.DataFrame([ourDict])
+
 #Looping through to construct a pandas dataframe
 for filename in os.listdir(directory):
 	f = os.path.join(directory, filename)
@@ -55,13 +54,6 @@ for filename in os.listdir(directory):
 				ourDict[key_word] += line.replace(key_word, "")
 	
 	current_df_item = pd.DataFrame([ourDict]).copy()
-	if f == ourURL:
-		with open('testcsv.csv', 'w') as ourW:
-			w = csv.DictWriter(ourW, ourDict.keys())
-			w.writeheader()
-			w.writerow(ourDict)
-		samplingdf = ourDict.copy()
-
 	final_df = pd.concat([final_df, current_df_item]).copy()
 
 #Modification & writing out file
