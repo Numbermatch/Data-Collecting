@@ -17,9 +17,7 @@ for filename in os.listdir(directory):
 		string_lines = data.split("\n")
 	
 		for line in string_lines:
-			#if line.split(" ")[0].isupper():
 			if line.isupper() and line[0] != " ":
-				#key_word = line.split(" ")[0]
 				key_word = line
 				
 				if key_word not in ourDict:
@@ -46,19 +44,15 @@ for filename in os.listdir(directory):
 		
 		ourDict["Path"] = f
 		data = file.read().replace("\t", "")
-		#data = data.replace("SEE ALSO", "SEE_ALSO")
 		string_lines = data.split("\n")
 		
 		key_word = "NAME"
 		for line in string_lines:
 
-			#if line.split(" ")[0].isupper():
 			if line.isupper() and line[0] != " ":
-				#key_word = line.split(" ")[0]
 				key_word = line
 			if key_word in ourDict:
 				ourDict[key_word] += line.replace(key_word, "")
-	
 	
 	current_df_item = pd.DataFrame([ourDict]).copy()
 	if f == ourURL:
@@ -67,16 +61,9 @@ for filename in os.listdir(directory):
 			w.writeheader()
 			w.writerow(ourDict)
 		samplingdf = ourDict.copy()
-	#final_df = final_df.append(current_df_item, ignore_index=True)
-	
-	final_df = pd.concat([final_df, current_df_item]).copy()
-	#break
 
-for val in samplingdf:
-	print(val, ":", samplingdf[val])
+	final_df = pd.concat([final_df, current_df_item]).copy()
 
 #Modification & writing out file
 final_df = final_df.iloc[1: , :]
-
-#final_df.to_csv(directory2 + "data_dump.csv")
-
+final_df.to_csv(directory2 + "data_dump.csv")
